@@ -3,11 +3,11 @@ package com.sh.spr_login.exception;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class InvalidUniqueEmailException extends RuntimeException{
+public class EmailNotFoundException extends RuntimeException{
 
-    private static final String MESSGAE ="해당 메일정보는 이미 등록되어 있습니다.";
+    private static final String MESSGAE ="해당 도메인 정보로 등록 불가 합니다.";
 
-    public InvalidUniqueEmailException() {
+    public EmailNotFoundException() {
         super(MESSGAE);
         log.error(MESSGAE);
     }

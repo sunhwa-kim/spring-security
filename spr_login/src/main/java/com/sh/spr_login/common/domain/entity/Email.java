@@ -5,15 +5,14 @@ import com.sh.spr_login.common.exception.WrongDomainException;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-@Slf4j
+import static javax.persistence.FetchType.LAZY;
+
 @Getter
+@Setter
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -21,14 +20,15 @@ public class Email {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
 
     @Column(unique = true)
     private String domain;
 
+
     public static Email of(String domain) throws WrongDomainException {
         Email email = new Email();
-        email.checkDomain(domain);
+        email.checkDomain(domain.trim());
         email.domain = domain;
         return email;
     }
@@ -37,7 +37,6 @@ public class Email {
         if(domain.indexOf("@")!=-1) throw new WrongDomainException("@");
 
         int pointIndex = domain.length() - 4;
-//        log.info(">> {}, {} : {}",pointIndex,domain.length(),domain.indexOf(".") > pointIndex);
         if(domain.indexOf(".")==-1 || domain.indexOf(".") > pointIndex) throw new InvalidEmailException();
     }
 }

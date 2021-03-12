@@ -1,4 +1,4 @@
-package com.sh.spr_login.common.domain;
+package com.sh.spr_login.common.domain.entity;
 
 import com.sh.spr_login.common.domain.entity.User;
 import org.junit.jupiter.api.Test;

@@ -44,14 +44,15 @@ class RegisterServiceTest {
     }
 
     @Test
-    public void registerUser() {
+    public void registerUser() throws WrongDomainException {
         String email = "tester@example.com";
         String name = "tester";
         String password = "test";
 
         User mockUser = givenUser(email, name, password);
-
         RegisterRequest request = givenRegisterRequest(email, name, password);
+
+        given(emailRepository.findAllByDomain("example.com")).willReturn(givenEmails());
         given(registerService.registerUser(request))
                 .willReturn(mockUser);
 

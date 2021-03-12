@@ -12,7 +12,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @Slf4j
-@RestController
+@RestController("/amdin")
 public class AdmApiController {
     @Autowired
     private UserService userService;

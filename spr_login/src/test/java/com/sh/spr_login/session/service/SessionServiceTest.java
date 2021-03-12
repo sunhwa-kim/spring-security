@@ -2,7 +2,7 @@ package com.sh.spr_login.session.service;
 
 import com.sh.spr_login.common.domain.entity.User;
 import com.sh.spr_login.common.repository.UserRepository;
-import com.sh.spr_login.session.exception.EmailNotFoundException;
+import com.sh.spr_login.exception.EmailNotFoundException;
 import com.sh.spr_login.session.exception.PasswordWrongException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

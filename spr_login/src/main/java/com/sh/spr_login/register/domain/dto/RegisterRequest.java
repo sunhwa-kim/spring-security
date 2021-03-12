@@ -1,20 +1,22 @@
 package com.sh.spr_login.register.domain.dto;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
-import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class RegisterRequest {
 
     @NotBlank
-    private String email;
+    private String name;
     @NotBlank
     private String password;
     @NotBlank
-    private String name;
+    private String email;
+
+    private String role;
+
 }

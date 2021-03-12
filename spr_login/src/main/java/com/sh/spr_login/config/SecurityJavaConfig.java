@@ -17,14 +17,14 @@ public class SecurityJavaConfig extends WebSecurityConfigurerAdapter {
         http
                 .cors().disable()  // Todo 해제 - h2 db이용 위해
                 .csrf().disable()
-//                .formLogin().disable()  // 기본 로그인 화면 제거
+                .formLogin().disable()  // 기본 로그인 화면 제거
                 .headers().frameOptions().disable()  // Todo H2db iframe
                 ;
-        http.authorizeRequests()
-                .mvcMatchers("/", "/register/**").permitAll()
-                .mvcMatchers("/admin").hasRole("ADMIN")
-                .anyRequest().authenticated();
-        http.formLogin();
+//        http.authorizeRequests()
+//                .mvcMatchers("/", "/register/**").permitAll()
+//                .mvcMatchers("/admin").hasRole("ADMIN")
+//                .anyRequest().authenticated();
+//        http.formLogin();
     }
 
     @Bean

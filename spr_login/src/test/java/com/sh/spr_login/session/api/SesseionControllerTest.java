@@ -1,11 +1,17 @@
 package com.sh.spr_login.session.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sh.spr_login.common.domain.entity.User;
+import com.sh.spr_login.common.exception.WrongDomainException;
+import com.sh.spr_login.register.domain.dto.RegisterRequest;
+import com.sh.spr_login.session.domain.network.SessionResquestDto;
 import com.sh.spr_login.session.service.SessionService;
 import com.sh.spr_login.session.exception.PasswordWrongException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -25,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
+@AutoConfigureMockMvc
 class SesseionControllerTest {
 
         @Autowired
@@ -32,6 +39,9 @@ class SesseionControllerTest {
 
         @MockBean
         SessionService sessionService;
+
+        @Autowired
+        private ObjectMapper objectMapper;
 
         private MockMvc mvc;
 
@@ -67,22 +77,23 @@ class SesseionControllerTest {
 
     @Test
     public void createWithInvalidPassword() throws Exception {
-
-        when(sessionService.authenticate("tester@example.com", "wrong"))
+        String email = "tester@example.com";
+        String password = "wrong";
+        SessionResquestDto request = givenRequest(email, password);
+        when(sessionService.authenticate(email, password))
                 .thenThrow(PasswordWrongException.class);
 
         mvc.perform(post("/session")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"email\":\"tester@example.com\",\"" +"password\":\"wrong\"}"))
+                .characterEncoding("UTF-8")
+                .content(toJsonString(request)))
                 .andExpect(status().isBadRequest())
         ;
-
         verify(sessionService).authenticate(eq("tester@example.com"), eq("wrong"));
     }
 
     @Test
     public void createWithInvalidEmail() throws Exception {
-
         given(sessionService.authenticate("tester@example.com", "wrong"))
                 .willThrow(PasswordWrongException.class);
 
@@ -94,4 +105,13 @@ class SesseionControllerTest {
 
         verify(sessionService).authenticate(eq("tester@example.com"), eq("wrong"));
     }
+
+    private SessionResquestDto givenRequest(String email, String password) {
+        SessionResquestDto dto = new SessionResquestDto(email, password);
+        return dto;
+    }
+    private String toJsonString(SessionResquestDto dto) throws JsonProcessingException {
+        return objectMapper.writeValueAsString(dto);
+    }
+
 }

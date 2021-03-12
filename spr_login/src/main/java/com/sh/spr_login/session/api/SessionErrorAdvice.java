@@ -1,7 +1,7 @@
 package com.sh.spr_login.session.api;
 
+import com.sh.spr_login.exception.EmailNotFoundException;
 import com.sh.spr_login.session.exception.DuplicatedEmailException;
-import com.sh.spr_login.session.exception.EmailNotFoundException;
 import com.sh.spr_login.session.exception.PasswordWrongException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

@@ -3,17 +3,17 @@ package com.sh.spr_login.common.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Getter
 @EqualsAndHashCode
-@ToString(of = "id")
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -31,6 +31,8 @@ public class User {
     private String email;
 
     private String password;
+
+    private String role;
 
     @NotNull
     private Long level;
